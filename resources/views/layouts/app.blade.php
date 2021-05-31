@@ -11,6 +11,7 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -76,7 +77,36 @@
         </nav>
 
         <main class="py-4">
-            @yield('content')
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <ul class="nav justify-content-start">
+                                @if (Auth::user()->role == 'admin')
+                                <li class="nav-item">
+                                    <a class="nav-link" aria-current="page" href="{{ route('home') }}">Dashboard</a>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
+                                        aria-expanded="false">Kendaraan</a>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="{{ route('kendaraan.index') }}">Data Kendaraan</a></li>
+                                        <li><a class="dropdown-item" href="#">Tambah Kendaraan</a></li>
+                                    </ul>
+                                </li>
+                                @elseif (Auth::user()->role == 'supervisor')
+                                supervisor
+                                @elseif (Auth::user()->role == 'rent staff')
+                                pool
+                                @endif
+                            </ul>
+                            <div class="container">
+                                @yield('content')
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </main>
     </div>
 </body>
