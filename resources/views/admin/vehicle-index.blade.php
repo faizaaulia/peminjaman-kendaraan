@@ -13,9 +13,9 @@
             </tr>
             @forelse ($data as $item)
                 <tr>
-                    <td>No</td>
+                    <td>{{ $loop->iteration }}</td>
                     <td>{{ $item->name }}</td>
-                    <td>{{ $item->type }}}</td>
+                    <td>{{ $item->type }}</td>
                     <td>{{ $item->status }}</td>
                     <td>Aksi</td>
                 </tr>

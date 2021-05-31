@@ -17,7 +17,7 @@ class CreateVehiclesTable extends Migration
             $table->id();
             $table->enum('type', ['penumpang', 'barang']);
             $table->string('name');
-            $table->enum('status', ['avail', 'unavail']);
+            $table->enum('status', ['available', 'unavailable'])->default('available');
             $table->timestamps();
         });
     }

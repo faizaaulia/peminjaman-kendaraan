@@ -17,6 +17,8 @@ class CreateTransactionsTable extends Migration
             $table->id();
             $table->bigInteger('vehicle_id');
             $table->bigInteger('user_id');
+            $table->bigInteger('approve_rent')->nullable();
+            $table->bigInteger('approve_spv')->nullable();
             $table->date('start_date');
             $table->date('end_data');
             $table->timestamps();
