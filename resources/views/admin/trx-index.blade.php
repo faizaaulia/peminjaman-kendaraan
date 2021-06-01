@@ -26,7 +26,9 @@
             @if (!($item->approved_pool && $item->approved_spv))
             <span class="badge badge-warning">APPROVAL PROCESS</span>
             @else
-                @if (Date::now() < $item->end_date)
+                @if (Date::now() < $item->start_date)
+                <span class="badge badge-danger">BOOKED</span>
+                @elseif (Date::now() < $item->end_date)
                 <span class="badge badge-primary">ON DUTY</span>
                 @else
                 <span class="badge badge-success">COMPLETED</span>

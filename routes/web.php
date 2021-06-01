@@ -30,7 +30,7 @@ Route::prefix('admin')->middleware(['auth'])->group(function() {
         return view('admin.index');
     })->name('admin.index');
     Route::resource('kendaraan', VehicleController::class);
-    Route::resource('peminjaman', TransactionController::class);
+    Route::resource('peminjaman', TransactionController::class)->except(['edit', 'update', 'destroy']);;
 });
 
 Route::group([
