@@ -16,11 +16,13 @@ class CreateTransactionsTable extends Migration
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('vehicle_id');
-            $table->bigInteger('user_id');
-            $table->bigInteger('approve_rent')->nullable();
-            $table->bigInteger('approve_spv')->nullable();
+            $table->string('employee_name');
+            $table->bigInteger('id_pool');
+            $table->bigInteger('id_spv');
+            $table->boolean('approved_pool')->default(false);
+            $table->boolean('approved_spv')->default(false);
             $table->date('start_date');
-            $table->date('end_data');
+            $table->date('end_date');
             $table->timestamps();
         });
     }

@@ -78,6 +78,8 @@
 
         <main class="py-4">
             <div class="container">
+                @auth
+                    
                 <div class="row justify-content-center">
                     <div class="col-md-12">
                         <div class="card">
@@ -94,18 +96,33 @@
                                         <li><a class="dropdown-item" href="#">Tambah Kendaraan</a></li>
                                     </ul>
                                 </li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
+                                        aria-expanded="false">Peminjaman Kendaraan</a>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="{{ route('peminjaman.index') }}">Riwayat Peminjaman</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('peminjaman.create') }}">Pinjam Kendaraan</a></li>
+                                    </ul>
+                                </li>
                                 @elseif (Auth::user()->role == 'supervisor')
-                                supervisor
-                                @elseif (Auth::user()->role == 'rent staff')
+                                <li class="nav-item">
+                                    <a class="nav-link" aria-current="page" href="{{ route('home') }}">Approval Request</a>
+                                </li>
+                                @elseif (Auth::user()->role == 'pool officer')
                                 pool
                                 @endif
                             </ul>
+                            <hr class="mt-0">
                             <div class="container">
                                 @yield('content')
                             </div>
                         </div>
                     </div>
                 </div>
+                @endauth
+                @guest
+                @yield('content')
+                @endguest
             </div>
         </main>
     </div>
