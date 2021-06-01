@@ -104,12 +104,13 @@
                                         <li><a class="dropdown-item" href="{{ route('peminjaman.create') }}">Pinjam Kendaraan</a></li>
                                     </ul>
                                 </li>
-                                @elseif (Auth::user()->role == 'supervisor')
+                                @else
                                 <li class="nav-item">
                                     <a class="nav-link" aria-current="page" href="{{ route('home') }}">Approval Request</a>
                                 </li>
-                                @elseif (Auth::user()->role == 'pool officer')
-                                pool
+                                <li class="nav-item">
+                                    <a class="nav-link" aria-current="page" href="{{ route('approval-history', ['role' => Auth::user()->role]) }}">Approval History</a>
+                                </li>
                                 @endif
                             </ul>
                             <hr class="mt-0">

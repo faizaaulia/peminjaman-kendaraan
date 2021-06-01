@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\TransactionRequest;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\Transaction;
 use App\Models\Vehicle;
@@ -17,8 +18,12 @@ class TransactionController extends Controller
      */
     public function index()
     {
-        $data = Transaction::orderBy('updated_at', 'DESC')->get();
-        return view('admin.trx-index', compact('data'));
+        if (Auth::user()->role == 'admin') {
+            $data = Transaction::orderBy('updated_at', 'DESC')->get();
+            return view('admin.trx-index', compact('data'));
+        }
+
+        abort(403);
     }
 
     /**
@@ -28,10 +33,15 @@ class TransactionController extends Controller
      */
     public function create()
     {
-        $vehicle = Vehicle::where('status', 'available')->get();
-        $spv = User::where('role', 'supervisor')->get();
-        $pool = User::where('role', 'pool officer')->get();
-        return view('admin.trx-create', compact('vehicle', 'spv', 'pool'));
+        if (Auth::user()->role == 'admin') {
+            $vehicle = Vehicle::where('status', 'available')->get();
+            $spv = User::where('role', 'supervisor')->get();
+            $pool = User::where('role', 'pool-officer')->get();
+
+            return view('admin.trx-create', compact('vehicle', 'spv', 'pool'));
+        }
+
+        abort(403);
     }
 
     /**
@@ -57,7 +67,8 @@ class TransactionController extends Controller
      */
     public function show($id)
     {
-        //
+        $data = Transaction::findOrFail($id);
+        return view('admin.trx-detail', compact('data'));
     }
 
     /**

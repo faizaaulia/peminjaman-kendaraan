@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\VehicleController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\ApprovalController;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,9 +33,13 @@ Route::prefix('admin')->middleware(['auth'])->group(function() {
     Route::resource('peminjaman', TransactionController::class);
 });
 
-Route::prefix('supervisor')->middleware(['auth'])->group(function() {
-    // Route::get('/', function() {
-    //     return view('spv.index');
-    // })->name('spv.index');
-    Route::get('/approval-request', [ApprovalController::class, 'index'])->name('approval-request');
-});
+Route::group([
+    'prefix' => '{role}',
+    'middleware' => 'auth',
+    'where' => ['role' => 'supervisor|pool-officer']], function() {
+        Route::get('/approval-request', [ApprovalController::class, 'index'])->name('approval-request');
+        Route::post('/approve/{id_trx}', [ApprovalController::class, 'store'])->name('approve');
+        Route::get('/approval/{id_trx}', [ApprovalController::class, 'show'])->name('approval.detail');
+        Route::get('/approval-history', [ApprovalController::class, 'history'])->name('approval-history');
+    }
+);

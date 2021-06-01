@@ -27,7 +27,7 @@ class HomeController extends Controller
         $user = Auth::user();
 
         if ($user->role == 'admin') return redirect()->route('admin.index');
-        else if ($user->role == 'supervisor') return redirect()->route('approval-request');
+        else return redirect()->route('approval-request', ['role' => Auth::user()->role]);
         // else $view = 'staff.index';
         
     }
